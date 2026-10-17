@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IoT Power Grid — Fault Detection & Restoration</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>⚡ IoT-Based Intelligent Power Grid</h1>
+    <p>Fault Detection &amp; Automatic Restoration — <span class="badge">SIMULATED DEMO</span></p>
+    <div id="connStatus" class="conn ok">LIVE</div>
+  </header>
+
+  <main>
+    <!-- ===== Grid schematic ===== -->
+    <section class="panel">
+      <h2>Network Topology</h2>
+      <div id="schematic"></div>
+      <div class="legend">
+        <span><i class="dot healthy"></i>HEALTHY</span>
+        <span><i class="dot faulty"></i>FAULTY</span>
+        <span><i class="dot isolated"></i>ISOLATED</span>
+        <span><i class="dot restoring"></i>RESTORING</span>
+        <span><i class="dot restored"></i>RESTORED</span>
+      </div>
+    </section>
+
+    <!-- ===== Section cards ===== -->
+    <section class="panel">
+      <h2>Distribution Sections</h2>
+      <div id="sectionCards" class="cards"></div>
+    </section>
+
+    <!-- ===== Fault injection controls ===== -->
+    <section class="panel">
+      <h2>Fault Injection &amp; Controls</h2>
+      <div class="controls">
+        <label>Section
+          <select id="ctrlSection"></select>
+        </label>
+        <label>Fault type
+          <select id="ctrlFault">
+            <option>OVERCURRENT</option>
+            <option>SHORT_CIRCUIT</option>
+            <option>UNDERVOLTAGE</option>
+            <option>OVERVOLTAGE</option>
+          </select>
+        </label>
+        <button id="btnInject" class="btn danger">Inject Fault</button>
+        <button id="btnClear" class="btn warn">Clear / Repair</button>
+        <button id="btnSensor" class="btn gray">Toggle Sensor Failure</button>
+      </div>
+      <p class="hint">Fault must persist for the confirmation delay before the
+      protection system trips. Watch the event log below.</p>
+    </section>
+
+    <!-- ===== Charts ===== -->
+    <section class="panel">
+      <h2>Live Measurements (per section)</h2>
+      <div class="charts">
+        <div class="chartBox"><h3>Current (A)</h3><canvas id="currentChart"></canvas></div>
+        <div class="chartBox"><h3>Voltage (kV)</h3><canvas id="voltageChart"></canvas></div>
+      </div>
+    </section>
+
+    <!-- ===== Logs ===== -->
+    <section class="panel">
+      <h2>Fault Log (SQLite)</h2>
+      <table id="faultTable">
+        <thead><tr><th>Time</th><th>Section</th><th>Type</th><th>V (kV)</th><th>I (A)</th><th>Response</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Event Log</h2>
+      <table id="eventTable">
+        <thead><tr><th>Time</th><th>Type</th><th>Message</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>Final-Year ECE Project — all measurements are simulated. No physical
+    fault-location accuracy is claimed.</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
